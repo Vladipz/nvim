@@ -9,7 +9,7 @@ return {
     null_ls.setup({
       sources = {
         require("none-ls.code_actions.eslint"),
-        null_ls.builtins.formatting.stylua,
+        -- require("none-ls.formatting.stylua"),
       }
     })
 

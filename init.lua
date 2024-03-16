@@ -26,7 +26,6 @@ vim.opt.rtp:prepend(lazypath)
 
 
 
-require("nvim-treesitter.install").prefer_git = true
 require("nvim-options")
 require("lazy").setup("plugins")
 

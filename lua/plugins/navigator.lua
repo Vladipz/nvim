@@ -7,7 +7,6 @@ return {
   config = function()
     require("navigator").setup({
       default_mapping = false,
-      format_on_save = true,
       keymaps = {
         {
           key = "gr",
