@@ -28,4 +28,7 @@ return {
         -- To disable everything getting folded upon opening a file
         vim.opt.foldenable = false
     end,
+
+
+
 }
