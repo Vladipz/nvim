@@ -9,6 +9,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
+				PATH = "prepend",
 				ensure_installed = { "lua_ls", "omnisharp", "pyright" },
 			})
 		end,
@@ -69,7 +70,7 @@ return {
 				{ desc = "[G]o to [D]efinition", buffer = buffer }
 			)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "[R]e[N]ame", buffer = buffer })
-			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+			vim.keymap.set({ "n", "v" }, "<leader>cq", vim.lsp.buf.code_action, {})
 			vim.keymap.set("n", "<leader>fm", function()
 				vim.lsp.buf.format({ async = true })
 			end, { desc = "[F]or[M]at", buffer = buffer })
