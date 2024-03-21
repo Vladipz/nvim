@@ -30,6 +30,18 @@ function setup_c_sharp(dap)
     },
   }
 end
+function setup_python(dap)
+
+  dap.configurations.python = {
+    {
+      type = "python",
+      request = "launch",
+      name = "Launch file",
+      program = "${file}", -- This configuration will launch the current file if used.
+    },
+  }
+end
+
 
 return {
   "mfussenegger/nvim-dap",
@@ -77,5 +89,6 @@ return {
     vim.fn.sign_define('DapStopped', { text = '', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
     local dap = require("dap")
     setup_c_sharp(dap)
+    setup_python(dap)
   end
 }

@@ -10,6 +10,11 @@ return {
       sources = {
         require("none-ls.code_actions.eslint"),
         -- require("none-ls.formatting.stylua"),
+        --require("none-ls.diagnostics.flake8"),
+        --require("none-ls.formatting.black"),
+        -- require("none-ls.diagnostics.mypy")
+        null_ls.builtins.formatting.black,
+        -- null_ls.builtins.diagnostics.flake8,
       }
     })
 
