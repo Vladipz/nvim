@@ -5,7 +5,7 @@ vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
-
+--vim.cmd("set laststatus=0")
 vim.opt.nu = true
 vim.opt.relativenumber = true
 local powershell_options = {
