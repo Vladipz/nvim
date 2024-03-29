@@ -13,14 +13,14 @@ function set_mappings(client, buffer)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "K - show info, help", buffer = buffer })
   if client.server_capabilities.signatureHelpProvider then
     require("lsp-overloads").setup(client, {
-      display_automatically = false,
+      display_automatically = true,
       ui = {
         border = { " ", "", " ", " ", " ", "", " ", " " },
       },
     })
     vim.keymap.set({ "n", "i" }, "<C-n>", "<cmd>LspOverloadsSignature<CR>",
       { desc = "Ctrl + n - show signature help with overloads (if they are present)", buffer = buffer })
-  else
+      else
     vim.keymap.set({ "n", "i" }, "<C-n>", vim.lsp.buf.signature_help,
       { desc = "Ctrl + n - show signature help", buffer = buffer })
   end
@@ -48,8 +48,8 @@ return {
     "mfussenegger/nvim-dap",
     "jay-babu/mason-nvim-dap.nvim",
     opts = {
-        ensure_installed = { "python" }
-      }
+      ensure_installed = { "python" }
+    }
   },
   {
     "neovim/nvim-lspconfig",

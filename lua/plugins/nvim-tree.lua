@@ -5,6 +5,7 @@ return {
   },
   keys = {
     { "<leader>fe", vim.cmd.NvimTreeToggle, desc = "[F]ile [E]xplorer" },
+    { "<leader>tf", vim.cmd.NvimTreeFindFile, desc = "[F]ile [G]o in Tree" },
   },
   init = function()
     vim.g.loaded_netrw = 1
