@@ -8,7 +8,7 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Ctrl + k in Normal Mode - go to
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Ctrl + h in Normal Mode - go to left split" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Ctrl + l in Normal Mode - go to right split" })
 
-
+vim.opt.scrolloff = 8
 
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

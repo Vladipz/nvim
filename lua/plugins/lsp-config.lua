@@ -1,5 +1,5 @@
 function set_mappings(client, buffer)
-  print("Setting mappings for " .. client.name)
+  -- print("Setting mappings for " .. client.name)
   vim.keymap.set("n", "<leader>dk", vim.diagnostic.goto_prev, { desc = "[D]iagnostic [k] - previous", buffer = buffer })
   vim.keymap.set("n", "<leader>dj", vim.diagnostic.goto_next, { desc = "[D]iagnostic [j] - next", buffer = buffer })
   vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float, { desc = "[D]iagnostic [O]pen", buffer = buffer })
@@ -20,7 +20,7 @@ function set_mappings(client, buffer)
     })
     vim.keymap.set({ "n", "i" }, "<C-n>", "<cmd>LspOverloadsSignature<CR>",
       { desc = "Ctrl + n - show signature help with overloads (if they are present)", buffer = buffer })
-      else
+  else
     vim.keymap.set({ "n", "i" }, "<C-n>", vim.lsp.buf.signature_help,
       { desc = "Ctrl + n - show signature help", buffer = buffer })
   end
@@ -31,7 +31,7 @@ return {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup({})
-      ensure_installed = { "black", "flake8", "mypy","debugpy" }
+      ensure_installed = { "black", "flake8", "mypy", "debugpy" , "autoflake"}
     end,
   },
   {
@@ -39,7 +39,7 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         PATH = "prepend",
-        ensure_installed = { "lua_ls", "omnisharp", "pyright" },
+        ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server" },
       })
     end,
   },
@@ -69,7 +69,12 @@ return {
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
       })
-
+      lspconfig.html.setup({
+        default_config
+      })
+      lspconfig.emmet_language_server.setup({
+        default_config
+      })
       lspconfig.lua_ls.setup({})
       lspconfig.pyright.setup({
         on_attach = function(client, buffer)
@@ -91,6 +96,12 @@ return {
         },
       })
 
+      lspconfig.tsserver.setup({
+        on_attach = function(client, buffer)
+          set_mappings(client, buffer)
+        end,
+        capabilities = capabilities,
+      })
       lspconfig.omnisharp.setup({
         on_attach = function(client, buffer)
           set_mappings(client, buffer)
