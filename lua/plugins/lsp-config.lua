@@ -30,15 +30,15 @@ return {
   {
     "williamboman/mason.nvim",
     config = function()
-      require("mason").setup({})
-      ensure_installed = { "black", "flake8", "mypy", "debugpy" , "autoflake"}
+      require("mason").setup({
+        ensure_installed = { "black", "flake8", "mypy", "debugpy", "autoflake" }
+      })
     end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        PATH = "prepend",
         ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server" },
       })
     end,
@@ -60,11 +60,15 @@ return {
     config = function()
       vim.diagnostic.config({ update_in_insert = true })
       local lspconfig = require("lspconfig")
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
       default_config = {
         capabilities = capabilities,
         on_attach = set_mappings,
+        root_dir = function(fname)
+          return vim.loop.cwd()
+        end,
       }
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
@@ -75,7 +79,6 @@ return {
       lspconfig.emmet_language_server.setup({
         default_config
       })
-      lspconfig.lua_ls.setup({})
       lspconfig.pyright.setup({
         on_attach = function(client, buffer)
           set_mappings(client, buffer)
