@@ -32,7 +32,7 @@ return {
     config = function()
       require("mason").setup({
         PATH = "prepend", -- "skip" seems to cause the spawning error
-      --   ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server", "black", "flake8", "mypy", "debugpy", "autoflake", "isort", "sqlls", "sql-formatter" },
+        --   ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server", "black", "flake8", "mypy", "debugpy", "autoflake", "isort", "sqlls", "sql-formatter" },
       })
     end,
   },
@@ -52,6 +52,20 @@ return {
     opts = {
       ensure_installed = { "python" }
     }
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    config = function()
+      require('mason-tool-installer').setup({
+        ensure_installed = {
+          'lua-language-server',
+          'stylua',
+          'shellcheck',
+          'omnisharp',
+          'html'
+        }
+      })
+    end,
   },
   {
     "neovim/nvim-lspconfig",
@@ -89,9 +103,11 @@ return {
         }
       })
 
-            lspconfig.lua_ls.setup({
+      lspconfig.lua_ls.setup({
         capabilities = capabilities,
       })
+
+
       lspconfig.html.setup({
         filetypes = { "html", "htmldjango" },
         -- default_config,
