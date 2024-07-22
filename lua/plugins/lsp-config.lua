@@ -7,9 +7,9 @@ function set_mappings(client, buffer)
     { desc = "[C]ode [A]ction)", buffer = buffer })
   -- vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "[G]o to [D]efinition", buffer = buffer })
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "[R]e[N]ame", buffer = buffer })
-  vim.keymap.set("n", "<leader>fm", function()
-    vim.lsp.buf.format({ async = true })
-  end, { desc = "[F]or[M]at", buffer = buffer })
+  -- vim.keymap.set("n", "<leader>fm", function()
+  --   vim.lsp.buf.format({ async = true })
+  -- end, { desc = "[F]or[M]at", buffer = buffer })
   vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "K - show info, help", buffer = buffer })
   if client.server_capabilities.signatureHelpProvider then
     require("lsp-overloads").setup(client, {
@@ -62,7 +62,9 @@ return {
           'stylua',
           'shellcheck',
           'omnisharp',
-          'html'
+          'html',
+          'angularls',
+          'tailwindcss',
         }
       })
     end,
@@ -76,9 +78,10 @@ return {
     config = function()
       vim.diagnostic.config({ update_in_insert = true })
       local lspconfig = require("lspconfig")
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
       -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
       capabilities.textDocument.completion.completionItem.snippetSupport = true
+
       default_config = {
         capabilities = capabilities,
         on_attach = set_mappings,
@@ -86,6 +89,18 @@ return {
           return vim.loop.cwd()
         end,
       }
+      local function configure_diagnostic_highlights()
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", {})
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", {
+          underdotted = true,
+        })
+      end
+      local function on_attach(client, buffer)
+        set_mappings(client, buffer)
+        configure_diagnostic_highlights()
+      end
+
+
       lspconfig.sqlls.setup({
         cmd = { "sql-language-server", "up", "--method", "stdio" },
         filetypes = { "sql", "mysql" },
@@ -108,11 +123,11 @@ return {
       })
 
 
-      lspconfig.html.setup({
-        filetypes = { "html", "htmldjango" },
-        -- default_config,
-        -- capabilities = capabilities,
-      })
+      -- lspconfig.html.setup({
+      --   filetypes = { "html", "htmldjango" },
+      --   -- default_config,
+      --   -- capabilities = capabilities,
+      -- })
       lspconfig.emmet_language_server.setup({
         -- default_config
       })
@@ -136,12 +151,51 @@ return {
         },
       })
 
-      lspconfig.tsserver.setup({
-        on_attach = function(client, buffer)
-          set_mappings(client, buffer)
-        end,
+      local angularls_path = require("mason-registry").get_package("angular-language-server"):get_install_path()
+
+
+      local cmd = {
+        'ngserver',
+        '--stdio',
+        '--tsProbeLocations',
+        table.concat({
+          angularls_path,
+          vim.uv.cwd(),
+        }, ','),
+        '--ngProbeLocations',
+        table.concat({
+          angularls_path .. '/node_modules/@angular/language-server',
+          vim.uv.cwd(),
+        }, ','),
+      }
+
+
+
+      lspconfig.tsserver.setup(
+        {capabilities = capabilities,
+        on_attach = set_mappings,
+          })
+
+
+      lspconfig.angularls.setup({
+        cmd = cmd,
         capabilities = capabilities,
+        on_attach = on_attach,
+        on_new_config = function(new_config)
+          new_config.cmd = cmd
+        end,
       })
+      lspconfig.tailwindcss.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          tailwindCSS = {
+            emmetCompletions = true,
+          },
+        },
+      })
+
+
       lspconfig.omnisharp.setup({
         on_attach = function(client, buffer)
           set_mappings(client, buffer)

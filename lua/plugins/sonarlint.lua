@@ -1,4 +1,4 @@
-return{
+return {
   "https://gitlab.com/schrieveslaach/sonarlint.nvim",
   config = function()
     require('sonarlint').setup({
@@ -13,10 +13,9 @@ return{
         }
       },
       filetypes = {
-               'c_sharp',
-        
+        'c_sharp',
+
       }
     })
-
   end
 }
