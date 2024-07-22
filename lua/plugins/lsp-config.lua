@@ -31,7 +31,7 @@ return {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup({
-        PATH = "prepend", -- "skip" seems to cause the spawning error
+        -- PATH = "skip", -- "skip" seems to cause the spawning error
         --   ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server", "black", "flake8", "mypy", "debugpy", "autoflake", "isort", "sqlls", "sql-formatter" },
       })
     end,
@@ -204,9 +204,6 @@ return {
         cmd = {
           "dotnet",
           "C:\\Users\\Vlad\\AppData\\Local\\nvim-data\\mason\\packages\\omnisharp\\libexec\\OmniSharp.dll",
-        },
-        handlers = {
-          ["textDocument/definition"] = require("omnisharp_extended").handler,
         },
         capabilities = capabilities,
         enable_editorconfig_support = true,
