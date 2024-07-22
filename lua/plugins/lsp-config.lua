@@ -65,6 +65,8 @@ return {
           'html',
           'angularls',
           'tailwindcss',
+          "tsserver",
+          "emmet_language_server"
         }
       })
     end,
@@ -118,9 +120,7 @@ return {
         }
       })
 
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities,
-      })
+      lspconfig.lua_ls.setup({})
 
 
       -- lspconfig.html.setup({
@@ -172,9 +172,10 @@ return {
 
 
       lspconfig.tsserver.setup(
-        {capabilities = capabilities,
-        on_attach = set_mappings,
-          })
+        {
+          capabilities = capabilities,
+          on_attach = set_mappings,
+        })
 
 
       lspconfig.angularls.setup({
@@ -202,7 +203,7 @@ return {
         end,
         cmd = {
           "dotnet",
-          "C:\\Users\\vladd\\AppData\\Local\\nvim-data\\mason\\packages\\omnisharp\\libexec\\OmniSharp.dll",
+          "C:\\Users\\Vlad\\AppData\\Local\\nvim-data\\mason\\packages\\omnisharp\\libexec\\OmniSharp.dll",
         },
         handlers = {
           ["textDocument/definition"] = require("omnisharp_extended").handler,
