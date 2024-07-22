@@ -31,12 +31,14 @@ return {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup({
-        ensure_installed = { "black", "flake8", "mypy", "debugpy", "autoflake" }
+        PATH = "prepend", -- "skip" seems to cause the spawning error
+      --   ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server", "black", "flake8", "mypy", "debugpy", "autoflake", "isort", "sqlls", "sql-formatter" },
       })
     end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    "nanotee/sqls.nvim",
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server" },
@@ -70,14 +72,33 @@ return {
           return vim.loop.cwd()
         end,
       }
-      lspconfig.lua_ls.setup({
+      lspconfig.sqlls.setup({
+        cmd = { "sql-language-server", "up", "--method", "stdio" },
+        filetypes = { "sql", "mysql" },
+        root_dir = function() return vim.loop.cwd() end,
+        settings = {
+          sqlls = {
+            connections = {
+              {
+                dialect = "sqlite",
+                name = "SQLite",
+                database = ""
+              }
+            }
+          }
+        }
+      })
+
+            lspconfig.lua_ls.setup({
         capabilities = capabilities,
       })
       lspconfig.html.setup({
-        default_config
+        filetypes = { "html", "htmldjango" },
+        -- default_config,
+        -- capabilities = capabilities,
       })
       lspconfig.emmet_language_server.setup({
-        default_config
+        -- default_config
       })
       lspconfig.pyright.setup({
         on_attach = function(client, buffer)
@@ -124,6 +145,7 @@ return {
         enable_import_completion = true,
         sdk_include_prereleases = true,
         analyze_open_documents_only = false,
+
       })
       vim.diagnostic.config({
         update_in_insert = true,
