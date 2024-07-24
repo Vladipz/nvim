@@ -1,7 +1,6 @@
 return {
   "stevearc/conform.nvim",
   config = function()
-    print("conform config")
     local conform = require("conform")
     conform.setup({
       formatters_by_ft = {
@@ -16,7 +15,6 @@ return {
     })
 
     vim.keymap.set("n", "<leader>fm", function()
-      print("formatting")
       conform.format({
         timeout_ms = 3000,
         lsp_fallback = true,
