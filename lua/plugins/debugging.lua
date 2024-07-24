@@ -5,14 +5,14 @@ function setup_c_sharp(dap)
   --   command = "C:\\Users\\vladd\\AppData\\Local\\nvim-data\\mason\\packages\\netcoredbg\\netcoredbg\\netcoredbg.exe",
   --   args = { '--interpreter=vscode' }
   -- }
-  dap.adapters.coreclr = {
+  dap.adapters.netcoredbg  = {
     type = 'executable',
-    command = "C:\\Users\\vladd\\AppData\\Local\\netcoredbg\\netcoredbg.exe",
+    command = "C:\\Users\\Vlad\\AppData\\Local\\netcoredbg\\netcoredbg.exe",
     args = { '--interpreter=vscode' }
   }
   dap.configurations.cs = {
     {
-      type = "coreclr",
+      type = "netcoredbg",
       name = ".NET - launch",
       request = "launch",
       justMyCode = false,
@@ -21,7 +21,7 @@ function setup_c_sharp(dap)
       end,
     },
     {
-      type = "coreclr",
+      type = "netcoredbg",
       name = ".NET - attach",
       request = "attach",
       justMyCode = false,
