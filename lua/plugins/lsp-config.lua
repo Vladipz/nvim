@@ -1,4 +1,8 @@
 function set_mappings(client, buffer)
+
+   if client.name == "angularls" then
+    client.server_capabilities.renameProvider = false
+  end
   -- print("Setting mappings for " .. client.name)
   vim.keymap.set("n", "<leader>dk", vim.diagnostic.goto_prev, { desc = "[D]iagnostic [k] - previous", buffer = buffer })
   vim.keymap.set("n", "<leader>dj", vim.diagnostic.goto_next, { desc = "[D]iagnostic [j] - next", buffer = buffer })
@@ -13,7 +17,7 @@ function set_mappings(client, buffer)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "K - show info, help", buffer = buffer })
   if client.server_capabilities.signatureHelpProvider then
     require("lsp-overloads").setup(client, {
-      display_automatically = true,
+      display_automatically = false,
       ui = {
         border = { " ", "", " ", " ", " ", "", " ", " " },
       },
