@@ -9,11 +9,18 @@ vim.cmd("set shiftwidth=2")
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
-vim.opt.hlsearch = false
+--shadafile
+vim.opt.shadafile = "NONE"
+vim.opt.showmode = false
+vim.o.cmdheight=0
 
+vim.opt.shellslash = false
+
+vim.opt.hlsearch = false
 local powershell_options = {
   shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
-  shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+  shellcmdflag =
+  "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
   shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
   shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
   shellquote = "",
