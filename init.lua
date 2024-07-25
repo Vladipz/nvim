@@ -1,4 +1,3 @@
-require("remap")
 
 
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Ctrl + j in Normal Mode - go to bottom split" })
@@ -25,4 +24,6 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("nvim-options")
+require("remap")
+
 require("lazy").setup("plugins")
