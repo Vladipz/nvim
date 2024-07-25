@@ -4,7 +4,7 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   keys = {
-    { "<leader>fe", vim.cmd.NvimTreeToggle, desc = "[F]ile [E]xplorer" },
+    { "<leader>fe", vim.cmd.NvimTreeToggle,   desc = "[F]ile [E]xplorer" },
     { "<leader>tf", vim.cmd.NvimTreeFindFile, desc = "[F]ile [G]o in Tree" },
   },
   init = function()
@@ -17,5 +17,10 @@ return {
         quit_on_open = true,
       },
     },
+    diagnostics = {
+      enable = true,
+    },
+    view = { adaptive_size = true }
+
   },
 }

@@ -1,6 +1,5 @@
 function set_mappings(client, buffer)
-
-   if client.name == "angularls" then
+  if client.name == "angularls" then
     client.server_capabilities.renameProvider = false
   end
   -- print("Setting mappings for " .. client.name)
@@ -36,13 +35,14 @@ return {
     config = function()
       require("mason").setup({
         -- PATH = "skip", -- "skip" seems to cause the spawning error
-        --   ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server", "black", "flake8", "mypy", "debugpy", "autoflake", "isort", "sqlls", "sql-formatter" },
+        --[[ ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server", "black", "flake8", "mypy", "debugpy", "autoflake", "isort", "sqlls", "sql-formatter" }, ]]
       })
     end,
   },
   {
+    "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "nanotee/sqls.nvim",
+    "neovim/nvim-lspconfig",
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server" },
@@ -57,24 +57,24 @@ return {
       ensure_installed = { "python" }
     }
   },
-  {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    config = function()
-      require('mason-tool-installer').setup({
-        ensure_installed = {
-          'lua-language-server',
-          'stylua',
-          'shellcheck',
-          'omnisharp',
-          'html',
-          'angularls',
-          'tailwindcss',
-          "tsserver",
-          "emmet_language_server"
-        }
-      })
-    end,
-  },
+  -- {
+  --   "WhoIsSethDaniel/mason-tool-installer.nvim",
+  --   config = function()
+  --     require('mason-tool-installer').setup({
+  --       ensure_installed = {
+  --         'lua_ls',
+  --         'stylua',
+  --         'shellcheck',
+  --         'omnisharp',
+  --         'html',
+  --         'angularls',
+  --         'tailwindcss',
+  --         "tsserver",
+  --         "emmet_language_server"
+  --       }
+  --     })
+  --   end,
+  -- },
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -124,17 +124,12 @@ return {
         }
       })
 
-      lspconfig.lua_ls.setup({})
+      lspconfig.lua_ls.setup(default_config)
+      lspconfig.html.setup(default_config)
+      lspconfig.emmet_language_server.setup(default_config)
+      lspconfig.cssls.setup(default_config)
+      lspconfig.css_variables.setup(default_config)
 
-
-      -- lspconfig.html.setup({
-      --   filetypes = { "html", "htmldjango" },
-      --   -- default_config,
-      --   -- capabilities = capabilities,
-      -- })
-      lspconfig.emmet_language_server.setup({
-        -- default_config
-      })
       lspconfig.pyright.setup({
         on_attach = function(client, buffer)
           set_mappings(client, buffer)
