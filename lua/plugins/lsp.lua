@@ -56,7 +56,9 @@ return {
   {
     "williamboman/mason.nvim",
     config = function()
-      require("mason").setup({})
+      require("mason").setup({
+        ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server", "black", "flake8", "mypy", "debugpy", "autoflake", "isort", "sqlls", "sql-formatter" }, 
+      })
     end
   },
   {
