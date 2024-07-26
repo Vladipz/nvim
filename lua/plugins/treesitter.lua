@@ -10,6 +10,6 @@ return {
       auto_install = true,
       highlight = { enable = true },
       indent = { enable = true },
-          })
+    })
   end
 }
