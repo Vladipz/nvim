@@ -17,9 +17,6 @@ return {
         quit_on_open = true,
       },
     },
-    diagnostics = {
-      enable = true,
-    },
     view = { adaptive_size = true }
 
   },
