@@ -41,3 +41,7 @@ vim.keymap.set("n", "<C-Left>", "<CMD>vertical resize -2<CR>", { desc = "Ctrl + 
 vim.keymap.set("n", "<C-Right>", "<CMD>vertical resize +2<CR>", { desc = "Ctrl + RightArrow - make current split wider" })
 vim.keymap.set("n", "<C-Up>", "<CMD>resize +2<CR>", { desc = "Ctrl + UpArrow - make current split taller" })
 vim.keymap.set("n", "<C-Down>", "<CMD>resize -2<CR>", { desc = "Ctrl + DownArrow - make current split shorter" })
+
+--Dadbod
+
+vim.keymap.set("n", "<leader>db", "<CMD>DBUIToggle<CR>", { desc = "[S]plit [V]ertical" })
