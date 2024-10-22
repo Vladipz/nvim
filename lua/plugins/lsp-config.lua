@@ -14,7 +14,7 @@ local function set_mappings(client, buffer)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "[R]e[N]ame", buffer = buffer })
   if client.server_capabilities.signatureHelpProvider then
     require("lsp-overloads").setup(client, {
-      display_automatically = false,
+      display_automatically = true,
       ui = {
         border = { " ", "", " ", " ", " ", "", " ", " " },
       },
@@ -35,7 +35,7 @@ return {
     config = function()
       require("mason").setup({
         -- PATH = "skip", -- "skip" seems to cause the spawning error
-        ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server", "black", "flake8", "mypy", "debugpy", "autoflake", "isort", "sqlls", "sql-formatter" },
+        -- ensure_installed = { "lua_ls", "omnisharp", "pyright", "tsserver", "html", "emmet_language_server", "black", "flake8", "mypy", "debugpy", "autoflake", "isort", "sqlls", "sql-formatter" },
       })
     end,
   },
@@ -45,7 +45,8 @@ return {
 
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "eslint" }, automatic_installation = true
+        ensure_installed = { "eslint" },
+        -- automatic_installation = true
       })
     end,
   },
@@ -67,7 +68,7 @@ return {
       local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
       capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-      default_config = {
+      local default_config = {
         capabilities = capabilities,
         on_attach = set_mappings,
       }
@@ -82,15 +83,19 @@ return {
         configure_diagnostic_highlights()
       end
 
-
-
-      lspconfig.tsserver.setup(default_config)
+      -- lspconfig.csharp_ls.setup(default_config)
+      lspconfig.ts_ls.setup(default_config)
       lspconfig.lua_ls.setup(default_config)
       lspconfig.html.setup(default_config)
       lspconfig.cssls.setup(default_config)
       lspconfig.emmet_ls.setup(default_config)
       lspconfig.css_variables.setup(default_config)
-      -- lspconfig.omnisharp_mono.setup(default_config)
+      lspconfig.lemminx.setup(default_config)
+      lspconfig.sqlls.setup({
+        cmd = { "sql-language-server", "up", "--method", "stdio" },
+        filetypes = { "sql", "mysql" },
+        root_dir = function() return vim.loop.cwd() end,
+      })
       local angularls_path = require("mason-registry").get_package("angular-language-server"):get_install_path()
 
 
@@ -135,10 +140,12 @@ return {
           "dotnet",
           "C:\\Users\\Vlad\\AppData\\Local\\nvim-data\\mason\\packages\\omnisharp\\libexec\\OmniSharp.dll",
         },
+        -- cmd = {
+        --   "dotnet",
+        --   "C:\\Users\\Vlad\\AppData\\Local\\omnisharp\\OmniSharp.dll" },
         handlers = {
           ["textDocument/definition"] = require('omnisharp_extended').handler,
         },
-        capabilities = capabilities,
         on_attach = on_attach,
         settings = {
           FormattingOptions = {
