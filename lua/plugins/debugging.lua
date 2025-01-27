@@ -5,12 +5,12 @@ function setup_c_sharp(dap)
   --   command = "C:\\Users\\vladd\\AppData\\Local\\nvim-data\\mason\\packages\\netcoredbg\\netcoredbg\\netcoredbg.exe",
   --   args = { '--interpreter=vscode' }
   -- }
-  dap.adapters.netcoredbg  = {
+  dap.adapters.netcoredbg = {
     type = 'executable',
     command = "C:\\Users\\Vlad\\AppData\\Local\\netcoredbg\\netcoredbg.exe",
     args = { '--interpreter=vscode' }
   }
-  dap.configurations.cs = {
+  dap.configurations.cs   = {
     {
       type = "netcoredbg",
       name = ".NET - launch",
@@ -24,6 +24,7 @@ function setup_c_sharp(dap)
       type = "netcoredbg",
       name = ".NET - attach",
       request = "attach",
+      console = "integratedTerminal",
       justMyCode = false,
       program = function()
         return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/bin/Debug/", "file")

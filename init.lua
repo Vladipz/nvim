@@ -1,4 +1,8 @@
 
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = {"*.cshtml", "*.razor"},
+  command = "set filetype=html.cshtml.razor"
+})
 
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Ctrl + j in Normal Mode - go to bottom split" })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Ctrl + k in Normal Mode - go to top split" })

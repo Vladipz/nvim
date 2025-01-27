@@ -2,9 +2,9 @@ vim.g.mapleader = " "
 vim.opt.swapfile = false
 vim.opt.clipboard = "unnamed"
 vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 --vim.cmd("set laststatus=0")
 vim.opt.nu = true
 vim.opt.relativenumber = true

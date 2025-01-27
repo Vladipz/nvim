@@ -6,6 +6,7 @@ return {
       formatters_by_ft = {
         html = { "prettier" },
         cshtml = { "prettier" },
+        razor = { "prettier" },
         javascript = { "prettier" },
         typescript = { "prettier" },
         javascriptreact = { "prettier" },

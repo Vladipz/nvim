@@ -83,14 +83,23 @@ return {
         configure_diagnostic_highlights()
       end
 
+      -- configure solargraph 
+      lspconfig.solargraph.setup({
+        cmd = { "solargraph", "stdio" },
+        filetypes = { "ruby" },
+        root_dir = lspconfig.util.root_pattern("Gemfile", ".git"),
+        on_attach = on_attach,
+      })
+
       -- lspconfig.csharp_ls.setup(default_config)
+      lspconfig.pyright.setup(default_config)
       lspconfig.ts_ls.setup(default_config)
       lspconfig.lua_ls.setup(default_config)
       lspconfig.html.setup(default_config)
       lspconfig.cssls.setup(default_config)
       lspconfig.emmet_ls.setup(default_config)
       lspconfig.css_variables.setup(default_config)
-      lspconfig.lemminx.setup(default_config)
+      -- lspconfig.lemminx.setup(default_config)
       lspconfig.sqlls.setup({
         cmd = { "sql-language-server", "up", "--method", "stdio" },
         filetypes = { "sql", "mysql" },
